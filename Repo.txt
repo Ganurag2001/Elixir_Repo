@@ -1,0 +1,35 @@
+1) Enumerables - Iterating over list and maps.
+
+2) Streams - Handles very large (infinte) amount of data in the form of small batches.
+
+
+3) On accessing the values of map with keys there is an important observation as follows:
+
+
+iex(1)> map = %{a: "Anurag", b: 1} 
+%{a: "Anurag", b: 1}
+
+iex(2)> map[:a]
+"Anurag"
+iex(3)> map.a
+"Anurag"
+
+iex(4)> map[:c]
+nil
+iex(5)> map.c
+** (KeyError) key :c not found in: %{a: "Anurag", b: 1}
+
+
+
+4) An important notion to understand is the conversion of caption operator(&) to fn An example is shown below
+
+iex(9)> odd? = (fn x -> rem(x,2) !=0 end) 
+#Function<44.40011524/1 in :erl_eval.expr/5>
+iex(10)> Enum.filter(1..5, odd?)   
+[1, 3, 5]
+
+iex(11)> odd2? = &(rem(&1, 2) !=0 )
+#Function<44.40011524/1 in :erl_eval.expr/5>
+iex(12)> Enum.filter(1..5, odd2?)   
+[1, 3, 5]
+
