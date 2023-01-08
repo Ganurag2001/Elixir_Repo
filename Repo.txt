@@ -4,7 +4,7 @@
 
 
 3) On accessing the values of map with keys there is an important observation as follows:
-
+(Accessory protocol) ?
 
 iex(1)> map = %{a: "Anurag", b: 1} 
 %{a: "Anurag", b: 1}
@@ -32,4 +32,71 @@ iex(11)> odd2? = &(rem(&1, 2) !=0 )
 #Function<44.40011524/1 in :erl_eval.expr/5>
 iex(12)> Enum.filter(1..5, odd2?)   
 [1, 3, 5]
+
+5) get_in(data, keys) // 2 parameters 
+Gets a value from a nested structure 
+
+Q> We have to get some value from a map with map as its key or value using the access operator this is not possible
+Example
+
+iex(16)> users = %{"A" => %{age: 20}, "B" => %{:age => 24}}
+%{"A" => %{age: 20}, "B" => %{age: 24}}
+
+So we use get_in to fetch age of "A" from map as shown below
+
+iex(17)> get_in(users,["A", :age])
+20
+
+Another example is 
+
+users = [%{name: "john", age: 27}, %{name: "meg", age: 23}]
+all = fn :get, data, next -> Enum.map(data, next) end
+get_in(users, [all, :age])
+[27, 23]
+
+(Enum.map(data,next) -> iterates over the map and gives the keys and values for the map till last)
+
+*** However this doesn't work for structs - https://hexdocs.pm/elixir/1.12/Kernel.html#get_in/2-working-with-structs
+
+6) put_in(path, value) 
+put_in(opts[:foo][:bar], :baz)
+put_in(opts,[:foo][:bar], :baz)
+ Both are equivalent
+
+iex(18)> users = %{"Anurag" => %{age: 27}, "Anmol" => %{age: 29}}     
+%{"Anmol" => %{age: 29}, "Anurag" => %{age: 27}}
+
+iex(19)> put_in(users["Anurag"][:age],28) 
+%{"Anmol" => %{age: 29}, "Anurag" => %{age: 28}}
+
+*** Dont update a key that doesnt exist we get an error
+
+iex(20)> put_in(users["Arun"][:age],38)   
+** (ArgumentError) could not put/update key :age on a nil value
+    (elixir 1.12.2) lib/access.ex:365: Access.get_and_update/3
+    (elixir 1.12.2) lib/map.ex:854: Map.get_and_update/3
+
+## To read more about put_in : https://hexdocs.pm/elixir/1.12/Kernel.html#put_in/3
+
+7) Problem
+
+iex(1)> mac = fn mac ->        
+...(1)> mac = [0,0,0,0] ++ mac 
+...(1)> Enum.join(for(m <- mac, do: Base.encode16(<<m>>)), ":")
+...(1)> end
+
+<<>> -> this represents binary
+
+Base.encode16()   - 16 bit encoding  
+Enum.join()       - List to string 
+
+iterates in mac which is a list it encodes every value in 16 bit and enum.join returns a string
+
+
+
+8) resource = Enum.find(resource, &(&1.id == resource_id))
+
+Enum.find()  - finds value in a List 
+
+the function matches the value in mao of id andn resource_id and find it in the list
 
