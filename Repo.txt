@@ -1,3 +1,77 @@
+This is my learning
+
+Elixir is a functional programming language that offers powerful concurrency and fault-tolerance features, making it a great choice for building scalable and reliable distributed systems.
+
+1) Genserver - A GenServer process is a long-running process that can maintain some state and process messages asynchronously. It can be used to implement a variety of systems, such as servers, caches, state machines, and more.
+You can start a new GenServer process using the GenServer.start_link/3 function.
+This function takes three arguments: the GenServer module, the initial state of the process, and any options you want to pass to the process.
+You can then send messages to the GenServer process using the GenServer.call/3 or GenServer.cast/2 functions, depending on whether you want a synchronous or asynchronous response.
+
+ Docs   - https://hexdocs.pm/elixir/1.12/GenServer.html
+ Gitlab - 
+
+2) Kernel processess like Process.send and Process.send_after 
+
+Process.send/2 takes two arguments: the process identifier of the recipient process, and the message to send. It sends the message asynchronously, without waiting for a response.
+
+Process.send_after/3 is similar to Process.send/2, but allows you to send a message to a process after a specified time interval. The function takes three arguments: the time interval (in milliseconds) to wait before sending the message, the process identifier of the recipient process, and the message to send.
+
+We need to use cancel timer after using Process.send_after for cancelling the timer.
+
+Docs - https://hexdocs.pm/elixir/1.12/Process.html#send_after/4
+https://hexdocs.pm/elixir/1.12/Process.html#cancel_timer/2
+
+Gitlab - 
+
+3) Ecto Changeset - In Elixir, Ecto is a database wrapper and query generator that allows you to interact with databases using Elixir syntax. An Ecto changeset is a data structure that represents the changes you want to make to a database record, along with the validation rules and error messages associated with those changes.
+
+Ecto provides us the option to validate the changeset after taking user's input before asserting that data in DB.
+
+Docs - https://hexdocs.pm/ecto/Ecto.Changeset.html
+Gitlab - 
+
+
+4) Concurrency - Concurrency in programming refers to the ability of a program or system to execute multiple tasks or processes simultaneously, or at least appear to do so. Concurrency is an important concept in modern software development, as it enables programs to perform multiple tasks concurrently, improving performance, responsiveness, and scalability.
+
+Concurrency can be achieved using various techniques, including threads, processes, and coroutines. Threads are lightweight sub-processes that share the same memory space as the main process, while processes are independent units of execution that run in their own memory space. Coroutines are lightweight, cooperative subroutines that allow you to switch between tasks or processes without blocking.
+
+Concurrency introduces new challenges, such as race conditions, deadlocks, and resource contention, which can cause unexpected behavior and errors. To avoid these issues, developers need to use appropriate synchronization mechanisms, such as locks, semaphores, and atomic operations, to coordinate access to shared resources.
+
+
+Concurrency in ELIXIR and PYTHON
+
+Concurrency is an important concept in software development, and both Elixir and Python offer features for building concurrent systems. However, they take different approaches to concurrency and have different strengths and weaknesses.
+
+Elixir is a functional programming language that runs on the Erlang virtual machine, which was designed for building highly concurrent and fault-tolerant systems. Elixir offers lightweight processes, also known as "actors," which communicate with each other using message passing. Elixir also has built-in support for supervision trees, which allow you to automatically restart failed processes and handle errors in a consistent way.
+
+Python, on the other hand, is a general-purpose programming language that offers several approaches to concurrency, including threads, processes, and asynchronous programming. Python's threading module allows you to create lightweight threads that share the same memory space, while its multiprocessing module allows you to create multiple processes that can run in parallel. Python's asyncio module offers a way to write asynchronous code that can handle I/O-bound tasks without blocking the main thread.
+
+
+Here is one of the links on elixir-forum
+link - 
+
+
+5) behaviour and protocol elixir-
+
+In Elixir, a behaviour and a protocol are both ways to define a contract for a module, specifying what functions it should implement and what their signatures should be.
+
+A behaviour is a module that defines a set of functions that other modules must implement in order to be considered to conform to that behaviour. Behaviours are similar to interfaces in object-oriented programming languages, but are more flexible and dynamic. Behaviours are useful for creating generic code that can work with different implementations, as well as for creating standard interfaces that are used by multiple modules.
+
+In Elixir, you define a behaviour using the defprotocol macro. This macro defines a set of functions and their signatures, but does not provide any implementations. Modules that want to conform to the behaviour must implement all of the functions defined in the protocol.
+
+A protocol is similar to a behaviour, but is used for polymorphism, rather than generic code. A protocol defines a set of functions that can be implemented by different types or structs. When a function is called on a variable that conforms to a protocol, Elixir will dispatch the call to the appropriate implementation based on the type of the variable. This allows you to write more generic code that works with different data types.
+
+In Elixir, you define a protocol using the defprotocol macro, and then define implementations for each type or struct using the defimpl macro. When a function is called on a variable that conforms to the protocol, Elixir will use the implementation that matches the type of the variable.
+
+Overall, behaviours and protocols are powerful features of Elixir that allow you to create generic and polymorphic code that can work with different implementations and data types. They help to enforce contracts and ensure that modules and types conform to a specific interface, making it easier to build robust and maintainable systems.
+
+Docs - https://stackoverflow.com/questions/26215206/difference-between-protocol-behaviour-in-elixir
+
+
+
+
+
+Here is a list of some functions and tricks i learned using elixir 
 1) Enumerables - Iterating over list and maps.
 
 2) Streams - Handles very large (infinte) amount of data in the form of small batches.
@@ -99,4 +173,12 @@ iterates in mac which is a list it encodes every value in 16 bit and enum.join r
 Enum.find()  - finds value in a List 
 
 the function matches the value in mao of id andn resource_id and find it in the list
+
+
+ • {:spawn, command} - runs an external program. command must contain the
+    program name and optionally a list of arguments separated by space. If
+    passing programs or arguments with space in their name, use the next
+    option.
+  • {:spawn_executable, filename} - runs the executable given by the
+    absolute file name filename. Arguments can be passed via the :args option.
 
